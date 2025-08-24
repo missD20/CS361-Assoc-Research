@@ -1,0 +1,7 @@
+dueDate: 11/02/2024
+latePenalties: [10, 20]
+test:
+  launch: java -jar build/libs/assignment.jar 
+  timelimit: 30
+build:
+  command: ./gradlew jar

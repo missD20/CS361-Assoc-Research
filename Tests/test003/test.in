@@ -1,0 +1,17 @@
+bard482
+research101  medical101 
+strategy101 lore201 
+insight314 alchemy287
+topic109 insight314 strategy101
+barter241 topic109 research101
+crafting101 barter241
+crafting319 crafting215
+crafting215 crafting101
+planning284 crafting101
+diplom392 planning284 diplom101
+builder103 crafting319
+speech103  oratory101
+bard222 speech103
+bard482 diplom392 bard401
+bard401 crafting319 bard222
+diplom101 builder103

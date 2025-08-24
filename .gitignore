@@ -1,0 +1,17 @@
+/.project
+/.vscode
+**/*.classpath
+**/.gradle
+Tests/*/*.err
+Tests/*/*.message
+Tests/*/*.diff
+Tests/*/*.out
+Tests/*/*.score
+Tests/*/*.time
+build/
+bin/
+/**/*.class
+/**/*.jar
+/.settings
+**/codegrader.log*
+!/gradle/wrapper/gradle-wrapper.jar

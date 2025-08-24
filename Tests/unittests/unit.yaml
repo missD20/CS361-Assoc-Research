@@ -1,0 +1,4 @@
+launch: ./gradlew test
+grading:
+  - oracle: junit5
+weight: 3

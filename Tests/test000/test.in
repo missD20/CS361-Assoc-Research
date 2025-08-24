@@ -1,0 +1,8 @@
+Commerce2
+Currency1  Travel1
+Diplomacy2  Currency1 Diplomacy1
+Commerce1  Currency1
+Diplomacy3  Diplomacy2
+Leader1  Diplomacy2 Currency1 Defense1
+Agriculture2  Agriculture1
+Commerce2  Commerce1
