@@ -73,6 +73,14 @@ public class Encyclopedia implements Iterable<Topic> {
         addIfMissing(requiredPriorTopic);
         addIfMissing(topic1);
         //*** Add your code below
+
+        // Edge : requiredPriorTopic -> topic1
+
+        // Update 'reqts': topic1 requires requiredPriorTopic
+        reqts.get(topic1).add(requiredPriorTopic);
+
+        // Update 'isReqtFor': requiredPriorTopic is required FOR topic1
+        isReqtFor.get(requiredPriorTopic).add(topic1);
     }
 
     /**
@@ -81,6 +89,25 @@ public class Encyclopedia implements Iterable<Topic> {
      */
     public void removeTopic(Topic topic) {
         //*** Add your code below
+        //Fisrt Find 'enabled' topics (those for which 'topic' was a prerequisite)
+        Set<Topic> enabledTopics = isReqtFor.get(topic);
+
+        if (enabledTopics != null) {
+            // For each unlocked topic, remove 'topic' from its prerequisite list.
+            for (Topic enabled : enabledTopics) {
+                // We are updating the list of prerequisites (reqts) for the 'enabled' topic
+                Set<Topic> requirementsOfEnabled = reqts.get(enabled);
+                if (requirementsOfEnabled != null) {
+                    requirementsOfEnabled.remove(topic);
+                }
+                // Note: We do not remove 'enabled' from isReqtFor.get(topic),
+                // because 'topic' will be removed immediately (after step 3).
+            }
+        }
+
+        // Remove the subject itself from both cards (which completes the edge removal)
+        reqts.remove(topic);
+        isReqtFor.remove(topic);
     }
 
     /**
@@ -117,6 +144,38 @@ public class Encyclopedia implements Iterable<Topic> {
     Set<Topic> getAllRequirements(Topic ofThisTopic) {
         Set<Topic> result = new HashSet<>();
         //*** Add your code below
+        // Use a Queue for Breadth First Search (BFS)
+        Queue<Topic> queue = new LinkedList<>();
+
+        // Initialize the queue with immediate prerequisites
+        Set<Topic> immediateReqts = reqts.get(ofThisTopic);
+
+        if (immediateReqts != null) {
+            for (Topic reqt : immediateReqts) {
+                if (!result.contains(reqt)) {
+                    result.add(reqt);
+                    queue.offer(reqt);
+                }
+            }
+        }
+
+        // Iteratively traverse dependencies (BFS)
+        while (!queue.isEmpty()) {
+            Topic current = queue.poll();
+
+            // We find the prerequisites of the current topic
+            Set<Topic> nextReqts = reqts.get(current);
+
+            if (nextReqts != null) {
+                for (Topic nextReqt : nextReqts) {
+                    // If this prerequisite has not been explored
+                    if (!result.contains(nextReqt)) {
+                        result.add(nextReqt);
+                        queue.offer(nextReqt); // Add it to explore your own prerequisites
+                    }
+                }
+            }
+        }
         
         return result;
     }
